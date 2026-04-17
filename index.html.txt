@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Seine Palette | Precision Quiz</title>
+    <title>The Seine Palette | Signature Persona Quiz</title>
     <style>
         :root { --primary: #8e735b; --bg: #fdfaf5; --card: #ffffff; --accent: #d4a373; }
         body { font-family: 'Optima', 'Didot', serif; background-color: var(--bg); color: #444; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
@@ -11,13 +11,13 @@
         h1 { color: var(--primary); font-size: 1.8rem; margin-bottom: 10px; }
         .question { display: none; }
         .question.active { display: block; animation: fadeIn 0.5s; }
-        .options { list-style: none; padding: 0; margin-top: 20px; }
-        .options li { background: #f9f9f9; margin: 10px 0; padding: 15px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: 0.3s; text-align: left; }
+        .options { list-style: none; padding: 0; margin-top: 25px; }
+        .options li { background: #f9f9f9; margin: 12px 0; padding: 18px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: 0.3s; text-align: left; line-height: 1.4; }
         .options li:hover { background: var(--accent); color: white; border-color: var(--accent); }
         #result { display: none; animation: fadeIn 0.8s; }
-        .lipstick-tag { font-weight: bold; color: var(--accent); font-size: 1.4rem; margin: 20px 0; }
-        .desc { line-height: 1.6; color: #666; text-align: left; background: #fef9f3; padding: 15px; border-radius: 8px; }
-        button { background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+        .lipstick-tag { font-weight: bold; color: var(--accent); font-size: 1.4rem; margin: 20px 0 15px; }
+        .desc { line-height: 1.7; color: #555; text-align: left; background: #fef9f3; padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); }
+        button { background: var(--primary); color: white; border: none; padding: 12px 35px; border-radius: 5px; cursor: pointer; font-size: 1rem; margin-top: 20px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -25,93 +25,96 @@
 
 <div id="quiz-container">
     <div id="intro">
-        <h1> The Seine Palette</h1>
-        <p style="color: #888;">Discover your soul lipstick through the 4 dimensions of French life.</p>
-        <button onclick="showStep(1)">Start Test</button>
+        <h1>🎨 The Seine Palette</h1>
+        <p style="color: #888; font-style: italic;">Discover your "French Edition" Soul Lipstick</p>
+        <button onclick="showStep(1)">Start Journey</button>
     </div>
 
     <div class="question" id="step1">
         <h3>1. Which texture speaks to your soul?</h3>
         <ul class="options">
-            <li onclick="vote('matte', 3); showStep(2)">A. The velvety, frosted touch of a vintage book.</li>
-            <li onclick="vote('moist', 3); showStep(2)">B. The glowing, dew-kissed finish of a morning rose.</li>
+            <li onclick="setGroup('matte'); showStep(2)">A. The velvety, frosted touch of a vintage book. (Matte)</li>
+            <li onclick="setGroup('moist'); showStep(2)">B. The glowing, dew-kissed finish of a morning rose. (Moisturizing)</li>
         </ul>
     </div>
 
     <div class="question" id="step2">
         <h3>2. Your ideal vibe for a day in Paris?</h3>
         <ul class="options">
-            <li onclick="vote('937', 2); vote('712', 1); showStep(3)">A. Professional & Sharp (I'm here to conquer).</li>
-            <li onclick="vote('931', 2); vote('703', 2); showStep(3)">B. Gentle & Natural (I'm here to enjoy).</li>
-            <li onclick="vote('721', 3); vote('937', 1); showStep(3)">C. Radiant & Elegant (I'm here to shine).</li>
+            <li onclick="addTag('Cool', 2); addTag('Power', 1); showStep(3)">A. Professional & Sharp—I'm here to conquer.</li>
+            <li onclick="addTag('Gentle', 2); addTag('Relax', 2); showStep(3)">B. Gentle & Natural—I'm here to enjoy.</li>
+            <li onclick="addTag('Posh', 3); showStep(3)">C. Radiant & Elegant—I'm here to shine.</li>
         </ul>
     </div>
 
     <div class="question" id="step3">
         <h3>3. Which "healing" moment do you crave?</h3>
         <ul class="options">
-            <li onclick="vote('931', 1); vote('703', 1); showStep(4)">A. Hot café crème on a crisp winter day.</li>
-            <li onclick="vote('712', 2); showStep(4)">B. Buying the last fresh baguette before closing.</li>
-            <li onclick="vote('721', 1); vote('937', 1); showStep(4)">C. That "Submission Successful" screen for your thesis.</li>
+            <li onclick="addTag('Gentle', 1); addTag('Relax', 2); showStep(4)">A. Hot café crème on a crisp winter day.</li>
+            <li onclick="addTag('Power', 3); showStep(4)">B. Buying the last fresh baguette before closing.</li>
+            <li onclick="addTag('Cool', 1); addTag('Posh', 2); showStep(4)">C. That "Submission Successful" screen for your thesis.</li>
         </ul>
     </div>
 
     <div class="question" id="step4">
         <h3>4. How do you handle a 5th-floor walk-up party?</h3>
         <ul class="options">
-            <li onclick="vote('937', 2); vote('931', 1); finish()">A. Arrive looking like a cool, aloof artist.</li>
-            <li onclick="vote('703', 2); vote('712', 1); finish()">B. Arrive breathless but naturally glowing.</li>
-            <li onclick="vote('721', 2); finish()">C. Arrive like a socialite who owns the building.</li>
+            <li onclick="addTag('Cool', 3); finish()">A. Arrive looking like a cool, aloof artist.</li>
+            <li onclick="addTag('Relax', 2); addTag('Power', 1); finish()">B. Arrive breathless but naturally glowing.</li>
+            <li onclick="addTag('Posh', 3); finish()">C. Arrive like a socialite who owns the building.</li>
         </ul>
     </div>
 
     <div id="result">
-        <h2>Your Signature Shade is...</h2>
+        <h2 style="font-size: 1.2rem; color: #888;">Your Signature Shade is...</h2>
         <div id="lipstick-name" class="lipstick-tag"></div>
-        <p id="lipstick-desc" class="desc"></p>
-        <button onclick="location.reload()">Retake</button>
+        <div id="lipstick-desc" class="desc"></div>
+        <button onclick="location.reload()">Retake Quiz</button>
     </div>
 </div>
 
 <script>
-    // Initial scores for each lipstick
-    let scores = { "931": 0, "937": 0, "703": 0, "712": 0, "721": 0 };
+    let tags = { "Cool": 0, "Gentle": 0, "Relax": 0, "Power": 0, "Posh": 0 };
     let group = ""; // matte or moist
 
     function showStep(n) {
         document.querySelectorAll('.question, #intro').forEach(el => el.style.display = 'none');
-        if(n <= 4) document.getElementById('step' + n).classList.add('active');
-    }
-
-    function vote(key, points) {
-        if(key === 'matte' || key === 'moist') {
-            group = key;
-        } else {
-            scores[key] += points;
+        if(n <= 4) {
+            document.getElementById('step' + n).classList.add('active');
+            document.getElementById('step' + n).style.display = 'block';
         }
     }
 
+    function setGroup(val) { group = val; }
+    function addTag(tag, pts) { tags[tag] += pts; }
+
     function finish() {
-        document.querySelectorAll('.question').forEach(el => el.classList.remove('active'));
-        const resultDiv = document.getElementById('result');
+        document.querySelectorAll('.question').forEach(el => el.style.display = 'none');
         const nameEl = document.getElementById('lipstick-name');
         const descEl = document.getElementById('lipstick-desc');
         
-        // Final logic: Filter by group first, then find highest score
-        let pool = (group === 'matte') ? ["931", "937"] : ["703", "712", "721"];
-        let winner = pool.reduce((a, b) => scores[a] > scores[b] ? a : b);
+        let winner = "";
+        
+        if (group === 'matte') {
+            // PK Cool vs Gentle
+            winner = (tags["Cool"] + tags["Posh"] >= tags["Gentle"] + tags["Relax"]) ? "937" : "931";
+        } else {
+            // PK Power vs Relax vs Posh
+            let pool = { "712": tags["Power"], "703": tags["Relax"], "721": tags["Posh"] };
+            winner = Object.keys(pool).reduce((a, b) => pool[a] > pool[b] ? a : b);
+        }
 
-        const data = {
-            "931": ["931 Nude Apricot | The Intellectual Philosopher", "A warm apricot brown. You balance logic with a gentle soul. This shade is your 'Effortless Wisdom'—perfect for deep conversations in a cozy café."],
+        const content = {
+            "931": ["931 Nude Apricot | The Intellectual Philosopher", "A warm apricot brown. You balance logic with a gentle soul. This shade is your 'Effortless Wisdom'—perfect for deep conversations in a cozy Left Bank café."],
             "937": ["937 Palpitating Rose | The Ethereal Artist", "A cool-toned pink rose. You are independent, sharp, and undeniably chic. This is your power color for conquering the city with an elegant edge."],
             "703": ["703 Gentle Cinnamon | Master of Effortless Chic", "A natural, moisturizing glow. You embody the true French '松弛感' (relaxation). You look stunning without even trying."],
-            "712": ["712 Lucky Koi | The High-Energy Lucky Charm", "Fresh and vibrant. You are the 'Morning Star' energy. This shade brings you a boost of luck and a bright, healthy complexion for those early lectures."],
+            "712": ["712 Lucky Koi | The High-Energy Lucky Charm", "Fresh and vibrant. The 'Morning Star' energy. This shade brings a boost of luck and a bright, healthy complexion for your busiest days."],
             "721": ["721 Posh Guava | The Luminous Protagonist", "Radiant and high-class. You have a natural gift for standing out. This guava shade highlights your elegant, 'C-position' charisma."]
         };
 
-        nameEl.innerText = data[winner][0];
-        descEl.innerText = data[winner][1];
-        resultDiv.style.display = 'block';
+        nameEl.innerText = content[winner][0];
+        descEl.innerText = content[winner][1];
+        document.getElementById('result').style.display = 'block';
     }
 </script>
 </body>
