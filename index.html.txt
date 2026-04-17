@@ -3,55 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Seine Palette | Discover Your Persona</title>
+    <title>The Seine Palette | Precision Quiz</title>
     <style>
-        :root {
-            --primary: #8e735b;
-            --bg: #fdfaf5;
-            --card: #ffffff;
-            --accent: #d4a373;
-        }
-        body {
-            font-family: 'Optima', 'Didot', 'serif';
-            background-color: var(--bg);
-            color: #444;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        #quiz-container {
-            background: var(--card);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-        }
+        :root { --primary: #8e735b; --bg: #fdfaf5; --card: #ffffff; --accent: #d4a373; }
+        body { font-family: 'Optima', 'Didot', serif; background-color: var(--bg); color: #444; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        #quiz-container { background: var(--card); padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 550px; width: 90%; text-align: center; }
         h1 { color: var(--primary); font-size: 1.8rem; margin-bottom: 10px; }
-        p.subtitle { font-style: italic; color: #888; margin-bottom: 30px; }
         .question { display: none; }
         .question.active { display: block; animation: fadeIn 0.5s; }
         .options { list-style: none; padding: 0; margin-top: 20px; }
-        .options li {
-            background: #f9f9f9;
-            margin: 10px 0;
-            padding: 15px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+        .options li { background: #f9f9f9; margin: 10px 0; padding: 15px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: 0.3s; text-align: left; }
         .options li:hover { background: var(--accent); color: white; border-color: var(--accent); }
         #result { display: none; animation: fadeIn 0.8s; }
-        .lipstick-tag { font-weight: bold; color: var(--accent); font-size: 1.2rem; margin-top: 15px; }
-        .desc { line-height: 1.6; color: #666; font-size: 0.95rem; }
-        button {
-            background: var(--primary); color: white; border: none;
-            padding: 10px 25px; border-radius: 5px; cursor: pointer; margin-top: 20px;
-        }
+        .lipstick-tag { font-weight: bold; color: var(--accent); font-size: 1.4rem; margin: 20px 0; }
+        .desc { line-height: 1.6; color: #666; text-align: left; background: #fef9f3; padding: 15px; border-radius: 8px; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; margin-top: 20px; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -59,25 +25,43 @@
 
 <div id="quiz-container">
     <div id="intro">
-        <h1>🎨 The Seine Palette</h1>
-        <p class="subtitle">Discover your "French Edition" Persona & Soul Lipstick</p>
-        <button onclick="startQuiz()">Start the Quiz</button>
+        <h1> The Seine Palette</h1>
+        <p style="color: #888;">Discover your soul lipstick through the 4 dimensions of French life.</p>
+        <button onclick="showStep(1)">Start Test</button>
     </div>
 
-    <div class="question" id="q1">
-        <h3>Q1: While browsing through an old bookstore in Saint-Michel, which texture captivates you more?</h3>
+    <div class="question" id="step1">
+        <h3>1. Which texture speaks to your soul?</h3>
         <ul class="options">
-            <li onclick="nextStep('matte')">A. The dry, thick, and grainy touch of frosted paper.</li>
-            <li onclick="nextStep('moist')">B. The smooth, wet, and shimmering finish of an oil canvas.</li>
+            <li onclick="vote('matte', 3); showStep(2)">A. The velvety, frosted touch of a vintage book.</li>
+            <li onclick="vote('moist', 3); showStep(2)">B. The glowing, dew-kissed finish of a morning rose.</li>
         </ul>
     </div>
 
-    <div class="question" id="q2">
-        <h3>Q2: How would you spend your perfect afternoon in Paris?</h3>
+    <div class="question" id="step2">
+        <h3>2. Your ideal vibe for a day in Paris?</h3>
         <ul class="options">
-            <li onclick="collectData('A')">A. Immersing in a niche exhibition at Centre Pompidou.</li>
-            <li onclick="collectData('B')">B. Sitting on a green chair in Tuileries Garden.</li>
-            <li onclick="collectData('C')">C. Scouring vintage shops in Le Marais.</li>
+            <li onclick="vote('937', 2); vote('712', 1); showStep(3)">A. Professional & Sharp (I'm here to conquer).</li>
+            <li onclick="vote('931', 2); vote('703', 2); showStep(3)">B. Gentle & Natural (I'm here to enjoy).</li>
+            <li onclick="vote('721', 3); vote('937', 1); showStep(3)">C. Radiant & Elegant (I'm here to shine).</li>
+        </ul>
+    </div>
+
+    <div class="question" id="step3">
+        <h3>3. Which "healing" moment do you crave?</h3>
+        <ul class="options">
+            <li onclick="vote('931', 1); vote('703', 1); showStep(4)">A. Hot café crème on a crisp winter day.</li>
+            <li onclick="vote('712', 2); showStep(4)">B. Buying the last fresh baguette before closing.</li>
+            <li onclick="vote('721', 1); vote('937', 1); showStep(4)">C. That "Submission Successful" screen for your thesis.</li>
+        </ul>
+    </div>
+
+    <div class="question" id="step4">
+        <h3>4. How do you handle a 5th-floor walk-up party?</h3>
+        <ul class="options">
+            <li onclick="vote('937', 2); vote('931', 1); finish()">A. Arrive looking like a cool, aloof artist.</li>
+            <li onclick="vote('703', 2); vote('712', 1); finish()">B. Arrive breathless but naturally glowing.</li>
+            <li onclick="vote('721', 2); finish()">C. Arrive like a socialite who owns the building.</li>
         </ul>
     </div>
 
@@ -85,58 +69,50 @@
         <h2>Your Signature Shade is...</h2>
         <div id="lipstick-name" class="lipstick-tag"></div>
         <p id="lipstick-desc" class="desc"></p>
-        <button onclick="location.reload()">Retake Quiz</button>
+        <button onclick="location.reload()">Retake</button>
     </div>
 </div>
 
 <script>
-    let scores = { type: '', pref: '' };
+    // Initial scores for each lipstick
+    let scores = { "931": 0, "937": 0, "703": 0, "712": 0, "721": 0 };
+    let group = ""; // matte or moist
 
-    function startQuiz() {
-        document.getElementById('intro').style.display = 'none';
-        document.getElementById('q1').classList.add('active');
+    function showStep(n) {
+        document.querySelectorAll('.question, #intro').forEach(el => el.style.display = 'none');
+        if(n <= 4) document.getElementById('step' + n).classList.add('active');
     }
 
-    function nextStep(type) {
-        scores.type = type;
-        document.getElementById('q1').classList.remove('active');
-        document.getElementById('q2').classList.add('active');
-    }
-
-    function collectData(pref) {
-        scores.pref = pref;
-        showResult();
-    }
-
-    function showResult() {
-        document.getElementById('q2').classList.remove('active');
-        const resDiv = document.getElementById('result');
-        const name = document.getElementById('lipstick-name');
-        const desc = document.getElementById('lipstick-desc');
-        resDiv.style.display = 'block';
-
-        if (scores.type === 'matte') {
-            if (scores.pref === 'A') {
-                name.innerText = "931 Nude Apricot | The Intellectual Philosopher";
-                desc.innerText = "Rational yet gentle. Like a scholar pondering in a Left Bank café, your 'Effortless Wisdom' is your power.";
-            } else {
-                name.innerText = "937 Palpitating Rose | The Ethereal Artist";
-                desc.innerText = "Independent and composed. This cool-toned rose complements your sharp, elegant, and untouchable vibe.";
-            }
+    function vote(key, points) {
+        if(key === 'matte' || key === 'moist') {
+            group = key;
         } else {
-            if (scores.pref === 'B') {
-                name.innerText = "703 Gentle Cinnamon | Master of Effortless Chic";
-                desc.innerText = "The ultimate 'I woke up like this'. You don't do extra—you do better. Naturally radiant and relaxed.";
-            } else if (scores.pref === 'C') {
-                name.innerText = "721 Posh Guava | The Luminous Protagonist";
-                desc.innerText = "Your soul sparkles with energy. You don't just attend the party; you ARE the atmosphere. Radiant and refined.";
-            } else {
-                name.innerText = "712 Lucky Koi | High-Energy Lucky Charm";
-                desc.innerText = "The sunshine student! Even during finals week, you carry the petit bonheur. Fresh, energized, and ready.";
-            }
+            scores[key] += points;
         }
     }
-</script>
 
+    function finish() {
+        document.querySelectorAll('.question').forEach(el => el.classList.remove('active'));
+        const resultDiv = document.getElementById('result');
+        const nameEl = document.getElementById('lipstick-name');
+        const descEl = document.getElementById('lipstick-desc');
+        
+        // Final logic: Filter by group first, then find highest score
+        let pool = (group === 'matte') ? ["931", "937"] : ["703", "712", "721"];
+        let winner = pool.reduce((a, b) => scores[a] > scores[b] ? a : b);
+
+        const data = {
+            "931": ["931 Nude Apricot | The Intellectual Philosopher", "A warm apricot brown. You balance logic with a gentle soul. This shade is your 'Effortless Wisdom'—perfect for deep conversations in a cozy café."],
+            "937": ["937 Palpitating Rose | The Ethereal Artist", "A cool-toned pink rose. You are independent, sharp, and undeniably chic. This is your power color for conquering the city with an elegant edge."],
+            "703": ["703 Gentle Cinnamon | Master of Effortless Chic", "A natural, moisturizing glow. You embody the true French '松弛感' (relaxation). You look stunning without even trying."],
+            "712": ["712 Lucky Koi | The High-Energy Lucky Charm", "Fresh and vibrant. You are the 'Morning Star' energy. This shade brings you a boost of luck and a bright, healthy complexion for those early lectures."],
+            "721": ["721 Posh Guava | The Luminous Protagonist", "Radiant and high-class. You have a natural gift for standing out. This guava shade highlights your elegant, 'C-position' charisma."]
+        };
+
+        nameEl.innerText = data[winner][0];
+        descEl.innerText = data[winner][1];
+        resultDiv.style.display = 'block';
+    }
+</script>
 </body>
 </html>
