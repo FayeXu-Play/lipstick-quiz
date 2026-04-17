@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>巴黎气质测试</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    .question {
+      margin: 30px 0;
+    }
+    button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      background: #333;
+      color: white;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    button:hover {
+      background: #555;
+    }
+    #result {
+      margin-top: 40px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>✨ 巴黎气质测试 ✨</h1>
+
+<div id="quiz">
+  <div class="question" id="q1">
+    <p>Q1：在圣米歇尔山的老书店翻阅旧书，你更迷恋哪种触感？</p>
+    <button onclick="answer('A')">A. 干燥、厚实、带着墨香味的磨砂纸张</button>
+    <button onclick="answer('B')">B. 刚刚粉刷完油画，那种细腻、湿润且闪着微光的色彩</button>
+  </div>
+
+  <div class="question" id="q2" style="display:none;">
+    <p>Q2：如果让你在巴黎度过一个完美的午后，你会如何安排？</p>
+    <button onclick="answer('A')">A. 蓬皮杜中心看先锋展</button>
+    <button onclick="answer('B')">B. 杜乐丽花园晒太阳</button>
+    <button onclick="answer('C')">C. 玛黑区淘二手店</button>
+  </div>
+
+  <div class="question" id="q3" style="display:none;">
+    <p>Q3：面对课堂汇报，你希望自己展现出？</p>
+    <button onclick="answer('A')">A. 专业严密</button>
+    <button onclick="answer('B')">B. 亲切自然</button>
+    <button onclick="answer('C')">C. 自信C位</button>
+  </div>
+</div>
+
+<div id="result" style="display:none;"></div>
+
+<script>
+  let answers = "";
+  let current = 1;
+
+  function answer(choice) {
+    answers += choice;
+
+    document.getElementById("q" + current).style.display = "none";
+    current++;
+
+    if (current <= 3) {
+      document.getElementById("q" + current).style.display = "block";
+    } else {
+      showResult();
+    }
+  }
+
+  const resultsMap = {
+    "AAA":"937 悸动玫瑰",
+    "AAB":"931 无拘奶杏",
+    "AAC":"937 悸动玫瑰",
+    "ABA":"931 无拘奶杏",
+    "ABB":"931 无拘奶杏",
+    "ABC":"937 悸动玫瑰",
+    "ACA":"937 悸动玫瑰",
+    "ACB":"931 无拘奶杏",
+    "ACC":"937 悸动玫瑰",
+    "BAA":"712 幸运锦鲤",
+    "BAB":"721 千金芭乐",
+    "BAC":"721 千金芭乐",
+    "BBA":"703 柔情肉桂",
+    "BBB":"703 柔情肉桂",
+    "BBC":"721 千金芭乐",
+    "BCA":"712 幸运锦鲤",
+    "BCB":"703 柔情肉桂",
+    "BCC":"712 幸运锦鲤"
+  };
+
+  const descriptions = {
+    "931 无拘奶杏": "知性哲学家｜杏粉暖棕。理性又温柔，像左岸咖啡馆的思考者。",
+    "937 悸动玫瑰": "清冷艺术家｜冷调粉玫瑰。独立沉稳，带高级感。",
+    "703 柔情肉桂": "松弛感天才｜淡肉桂色。不费力的时髦，自在舒适。",
+    "721 千金芭乐": "明媚女主角｜显白贵气，闪耀社交中心。",
+    "712 幸运锦鲤": "能量派锦鲤｜元气满满，小太阳体质。"
+  };
+
+  function showResult() {
+    const resultText = resultsMap[answers];
+    const description = descriptions[resultText];
+
+    document.getElementById("quiz").style.display = "none";
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = `
+      <h2>你的结果是：${resultText}</h2>
+      <p>${description}</p>
+      <p>你的选择：${answers}</p>
+    `;
+  }
+</script>
+
+</body>
+</html>
